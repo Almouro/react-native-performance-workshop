@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from "@expo/vector-icons/MaterialIcons";
 import { Photo } from "../../data/model/photo.quicktype";
 import { Button } from "../atoms/Button";
 

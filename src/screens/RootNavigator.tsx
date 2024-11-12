@@ -2,10 +2,11 @@ import * as React from "react";
 import { Analytics } from "react-native-analytics";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ExperimentScreen } from "./ExperimentScreen";
+import { ProfileScreen } from "./ProfileScreen";
 import { FlameChartScreen } from "./FlameChartScreen";
 import { Tabs } from "./Tabs";
 import { AnimationDemo } from "./AnimationDemo";
+import { ReactDevTools } from "./ReactDevTools";
 
 const MainNavigator = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ export const RootNavigator = () => {
           statusBarStyle: "dark",
           statusBarColor: "#FFB347",
         }}
-        // initialRouteName="FlameChart"
+        // initialRouteName="AnimationDemo"
       >
         <MainNavigator.Screen
           name="Tabs"
@@ -31,9 +32,16 @@ export const RootNavigator = () => {
             headerShown: false,
           }}
         />
-        <MainNavigator.Screen name="AnimationDemo" component={AnimationDemo} />
+        <MainNavigator.Screen
+          name="AnimationDemo"
+          component={AnimationDemo}
+          options={{
+            headerShown: false,
+          }}
+        />
         <MainNavigator.Screen name="FlameChart" component={FlameChartScreen} />
-        <MainNavigator.Screen name="Profile" component={ExperimentScreen} />
+        <MainNavigator.Screen name="Profile" component={ProfileScreen} />
+        <MainNavigator.Screen name="ReactDevTools" component={ReactDevTools} />
       </MainNavigator.Navigator>
     </NavigationContainer>
   );

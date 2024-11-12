@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -13,20 +12,23 @@ import Animated, {
   withRepeat,
   withTiming,
   Easing,
+  runOnUI,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const fibonacci = (num: number): number => {
-  if (num <= 1) return num;
-  return fibonacci(num - 1) + fibonacci(num - 2);
+const expensiveCalculation = (timems: number) => {
+  const initialTime = new Date().getTime();
+  while (new Date().getTime() - initialTime < timems) {}
 };
 
-const expensiveCalculation = () => fibonacci(38);
+const expensiveUICalculation = () => {
+  runOnUI(() => {
+    const initialTime = new Date().getTime();
+    while (new Date().getTime() - initialTime < 200) {}
+  })();
+};
 
-export const AnimationDemo: React.FC = () => {
-  const [isCalculating, setIsCalculating] = useState(false);
-  const [counter, setCounter] = useState(0);
-
+const useAnimation = () => {
   const y = useSharedValue(0);
 
   useEffect(() => {
@@ -38,28 +40,32 @@ export const AnimationDemo: React.FC = () => {
       Infinity,
       true
     );
-  }, []);
+  }, [y]);
 
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: y.value }],
-    };
-  });
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateY: y.value }],
+  }));
 
-  const calculate = async () => {
+  return animatedStyles;
+};
+
+const useCalculation = () => {
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const calculateJS = async () => {
     setIsCalculating(true);
-    // Just a quick hack to make sure we show "Calculating first"
     await new Promise((resolve) => setTimeout(resolve, 20));
-
-    const start = new Date().getTime();
-    const result = expensiveCalculation();
-    const end = new Date().getTime();
-    console.log(`Time taken: ${end - start}ms`);
-    console.log(result);
+    expensiveCalculation(4000);
     setIsCalculating(false);
   };
 
-  const navigation = useNavigation();
+  return { isCalculating, calculate: calculateJS };
+};
+
+export const AnimationDemo: React.FC = () => {
+  const { isCalculating, calculate } = useCalculation();
+  const animatedStyles = useAnimation();
+  const [counter, setCounter] = useState(0);
 
   return (
     <SafeAreaView
@@ -74,48 +80,32 @@ export const AnimationDemo: React.FC = () => {
           <Text style={styles.logoText}>🐹</Text>
         </Animated.View>
       </View>
+
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, { width: "80%" }]}
-          onPress={() => navigation.navigate("Profile")}
+        {/* <TouchableOpacity
+          style={[styles.button, { width: "80%", marginBottom: 10 }]}
+          onPress={() => expensiveUICalculation()}
         >
-          <Text style={styles.buttonText}>NAVIGATE</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          <Text style={styles.buttonText}>HEAVY UI</Text>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity
           style={[styles.button, { width: "80%" }]}
-          onPress={calculate}
+          onPress={() => calculate()}
         >
           <Text style={styles.buttonText}>
-            {isCalculating ? "CALCULATING..." : "CALCULATE"}
+            {isCalculating ? "CALCULATING..." : "HEAVY JS"}
           </Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 24,
-          }}
-        >
+        </TouchableOpacity> */}
+        {/* <View style={styles.counterContainer}>
           <TouchableOpacity
             activeOpacity={0.8}
-            style={[
-              {
-                backgroundColor: "#4990ff",
-                width: 60,
-                height: 60,
-                borderRadius: 100,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 16,
-              },
-            ]}
+            style={styles.counterButton}
             onPress={() => setCounter((prev) => prev + 1)}
           >
             <Text style={[styles.buttonText, { color: "white" }]}>+</Text>
           </TouchableOpacity>
           <Text style={[styles.buttonText, { color: "white" }]}>{counter}</Text>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
@@ -130,7 +120,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    // position: "absolute",
     width: 100,
     height: 100,
     justifyContent: "center",
@@ -154,5 +143,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#4990ff",
     textAlign: "center",
+  },
+  counterContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 24,
+  },
+  counterButton: {
+    backgroundColor: "#4990ff",
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 16,
   },
 });

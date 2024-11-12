@@ -1,17 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchPhotos } from "./api";
-import { Photo } from "./model/photo.quicktype";
+import { formatPhoto } from "./formatPhotos";
 
 export const useFollowingPhotos = () => usePhotos("following");
 export const useDiscoverPhotos = () => usePhotos("discover");
-
-const formatPhoto = (photo: Photo) => ({
-  ...photo,
-  pub: new Intl.DateTimeFormat("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date(photo.createdAt)),
-});
 
 export const usePhotos = (search: "discover" | "following") => {
   const {

@@ -83,6 +83,10 @@ react {
         /* Autolinking */
         autolinkLibrariesWithApp()
     }
+
+
+    // Uncomment me to profile in Android Studio
+    // debuggableVariants = []
 }
 
 /**

@@ -10,7 +10,7 @@ export const useCountdown = (targetDate: string) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCountDown(countDownDate - new Date().getTime());
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [countDownDate]);

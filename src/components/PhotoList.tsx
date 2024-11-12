@@ -12,7 +12,6 @@ export const PhotoList = ({ photos }: { photos: Photo[] }) => {
       renderItem={({ item }) => <PhotoListItem photo={item} />}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={Separator}
-      style={{ backgroundColor: "white" }}
       contentInsetAdjustmentBehavior="automatic"
     />
   );

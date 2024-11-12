@@ -18,7 +18,7 @@ class AnalyticsModule(reactContext: ReactApplicationContext) :
     runOnUiThread {
       // Simulate a heavy initialization on UI thread
       var sum = 0L
-      for (i in 1..1_000_000_000) {
+      for (i in 1..500_000_000) {
         sum += i
       }
     }

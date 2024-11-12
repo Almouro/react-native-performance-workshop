@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -28,9 +29,18 @@ const rootFunction = () => {
 };
 
 export const FlameChartScreen = () => {
+  const [state, setState] = React.useState(true);
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "green" }}>
-      <Button onPress={() => rootFunction()} title={"RUN FUNCTION"} />
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: state ? "purple" : "cyan" }}
+    >
+      <Button
+        onPress={() => {
+          rootFunction();
+          setState(!state);
+        }}
+        title={"RUN FUNCTION"}
+      />
     </SafeAreaView>
   );
 };

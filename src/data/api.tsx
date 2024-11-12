@@ -1,53 +1,17 @@
 import camelcaseKeys from "camelcase-keys";
-import { Photo, PhotoAPIResponse } from "./model/photo.quicktype";
-
-// CHANGE THIS TO YOUR OWN CLIENT ACCESS KEY
-const CLIENT_ACCESS_KEY = process.env.UNSPLASH_API_KEY ?? "REPLACE_ME";
-const USE_MOCKED_DATA = true;
-
-export const getAPISearchResults = async (
-  search: string,
-  page = 1
-): Promise<Record<string, unknown>> => {
-  const response = await fetch(
-    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-      search
-    )}&per_page=25&client_id=${CLIENT_ACCESS_KEY}&page=${page}`
-  );
-  const json = await response.json();
-
-  return json;
-};
-
-const mockDiscoverPhotos: any[] = [];
-for (let i = 0; i < 25; i++) {
-  mockDiscoverPhotos.push(require("./raw/guineapig.json").results[i]);
-  mockDiscoverPhotos.push(require("./raw/dog.json").results[i]);
-  mockDiscoverPhotos.push(require("./raw/rabbit.json").results[i]);
-  mockDiscoverPhotos.push(require("./raw/panda.json").results[i]);
-}
-
-const mockFollowingPhotos: any[] = [];
-for (let i = 29; i > 30 - 25; i--) {
-  mockFollowingPhotos.push(require("./raw/guineapig.json").results[i]);
-  mockFollowingPhotos.push(require("./raw/dog.json").results[i]);
-  mockFollowingPhotos.push(require("./raw/rabbit.json").results[i]);
-  mockFollowingPhotos.push(require("./raw/panda.json").results[i]);
-}
+import { Photo } from "./model/photo.quicktype";
+import { PhotoAPIResponse } from "./model/PhotoApiResponse.quicktype";
 
 // We mock the API to ensure we don't get rate limited
 const mockHttpCall = async (
   followingOrDiscover: "following" | "discover"
-): Promise<Record<string, unknown>> => {
+): Promise<PhotoAPIResponse> => {
   // Add a delay to simulate network request
   await new Promise((resolve) => setTimeout(resolve, 1500));
 
-  return {
-    results:
-      followingOrDiscover === "following"
-        ? mockFollowingPhotos
-        : mockDiscoverPhotos,
-  };
+  return followingOrDiscover === "following"
+    ? require("./raw/following.json")
+    : require("./raw/discover.json");
 };
 
 export const fetchPhotos = async (
@@ -55,11 +19,14 @@ export const fetchPhotos = async (
 ): Promise<Photo[]> => {
   const json = await mockHttpCall(search);
 
-  const photos = camelcaseKeys(json, {
-    deep: true,
-  }) as unknown as PhotoAPIResponse;
+  const photos = camelcaseKeys(
+    json.results as unknown as Record<string, unknown>,
+    {
+      deep: true,
+    }
+  ) as unknown as Photo[];
 
-  return photos.results;
+  return photos;
 };
 
 export const fetchNotifications = async (): Promise<{
