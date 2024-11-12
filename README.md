@@ -15,6 +15,7 @@ To make sure you get the best experience during the workshop
 - Android Studio & XCode up to date
 - Project installed (see below)
 - Android Release build installed on Android device (see below)
+- [Flashlight installed](https://docs.flashlight.dev/), `flashlight measure` works on your device
 
 Feel free to contact me on [Twitter](https://twitter.com/almouro), [BlueSky](https://bsky.app/profile/almouro.bsky.social) or [LinkedIn](https://www.linkedin.com/in/alexandremoureaux/) if you have any issues/questions before the workshop!
 
