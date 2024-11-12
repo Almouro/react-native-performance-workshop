@@ -1,50 +1,48 @@
-# Welcome to your Expo app 👋
+# React Native Performance Workshop
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This dummy app suffers from many performance issues, let's fix them together. 🔥
 
-## Get started
+See the prerequisites below.
 
-1. Install dependencies
+<img width="467" alt="image" src="https://github.com/user-attachments/assets/1658fded-d021-40fe-9b8b-0c3195636d48">
 
-   ```bash
-   npm install
-   ```
+## Prerequisites
 
-2. Start the app
+To make sure you get the best experience during the workshop
 
-   ```bash
-    npx expo start
-   ```
+- Node 18+
+- Have an Android real device or emulator set up
+- Android Studio & XCode up to date
+- Project installed (see below)
+- Android Release build installed on Android device (see below)
 
-In the output, you'll find options to open the app in a
+Feel free to contact me on [Twitter](https://twitter.com/almouro), [BlueSky](https://bsky.app/profile/almouro.bsky.social) or [LinkedIn](https://www.linkedin.com/in/alexandremoureaux/) if you have any issues/questions before the workshop!
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Install the project
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- `git clone` this project
+- run `yarn` to install dependencies
 
-## Get a fresh project
-
-When you're ready, run:
+Run on Android with:
 
 ```bash
-npm run reset-project
+npx expo run:android
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Then press `a` to open the built app on your Android device.
 
-## Learn more
+Run on iOS with:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npx expo run:ios
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Then press `i` to open the built app on your Android device.
 
-## Join the community
+### Install a release version of the Android app
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+cd android
+./gradlew assembleRelease
+adb install app/build/outputs/apk/release/app-release.apk
+```
