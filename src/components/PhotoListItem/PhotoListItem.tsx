@@ -8,7 +8,9 @@ import { useSafeAreaFrame } from "react-native-safe-area-context";
 export const PhotoListItem = ({ photo }: { photo: Photo }) => {
   const aspectRatio = photo.width / photo.height;
 
-  const { height } = useSafeAreaFrame();
+  const { width, height } = useSafeAreaFrame();
+
+  const imageWidth = width;
 
   return (
     <View style={styles.container} key={photo.id}>
@@ -23,7 +25,7 @@ export const PhotoListItem = ({ photo }: { photo: Photo }) => {
       >
         <Image
           style={styles.image}
-          source={{ uri: `${photo.urls.raw}` }}
+          source={{ uri: `${photo.urls.raw}&w=${imageWidth}` }}
           resizeMode="cover"
         />
       </View>
