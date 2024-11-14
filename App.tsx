@@ -32,7 +32,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <RootNavigator />
+        <Navigator />
       </QueryClientProvider>
     </SafeAreaProvider>
   );

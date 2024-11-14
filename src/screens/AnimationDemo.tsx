@@ -82,21 +82,21 @@ export const AnimationDemo: React.FC = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={[styles.button, { width: "80%", marginBottom: 10 }]}
           onPress={() => expensiveUICalculation()}
         >
           <Text style={styles.buttonText}>HEAVY UI</Text>
-        </TouchableOpacity> */}
-        {/* <TouchableOpacity
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.button, { width: "80%" }]}
           onPress={() => calculate()}
         >
           <Text style={styles.buttonText}>
             {isCalculating ? "CALCULATING..." : "HEAVY JS"}
           </Text>
-        </TouchableOpacity> */}
-        {/* <View style={styles.counterContainer}>
+        </TouchableOpacity>
+        <View style={styles.counterContainer}>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.counterButton}
@@ -105,7 +105,7 @@ export const AnimationDemo: React.FC = () => {
             <Text style={[styles.buttonText, { color: "white" }]}>+</Text>
           </TouchableOpacity>
           <Text style={[styles.buttonText, { color: "white" }]}>{counter}</Text>
-        </View> */}
+        </View>
       </View>
     </SafeAreaView>
   );
