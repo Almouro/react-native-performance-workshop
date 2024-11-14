@@ -58,6 +58,7 @@ export const DiscoverTab = () => {
         {isLoading ? <ActivityIndicator style={{ marginTop: 10 }} /> : null}
         {photos ? <PhotoList photos={photos} /> : null}
       </View>
+      <CountdownBanner />
     </View>
   );
 };
