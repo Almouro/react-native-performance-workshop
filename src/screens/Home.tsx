@@ -7,7 +7,11 @@ const Tab = createMaterialTopTabNavigator();
 
 export const HomeTopTabs = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        lazy: true,
+      }}
+    >
       <Tab.Screen name="Discover" component={DiscoverTab} />
       <Tab.Screen name="Following" component={FollowingTab} />
     </Tab.Navigator>
