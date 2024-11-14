@@ -1,0 +1,5 @@
+appId: com.theodo.rnperf.release
+---
+- clearState
+- launchApp
+- assertVisible: .*charles.*
